@@ -1,4 +1,5 @@
-import React from 'react'
+/* eslint-disable radix */
+import React, { useState } from 'react'
 import Table from './components/Table'
 
 const array = [
@@ -65,6 +66,24 @@ const column = [
   },
 ]
 
-const App = () => <Table data={array} columns={column} rowLimit={4} />
+const App = () => {
+  const [row, setRow] = useState(2)
+
+  const rowHandler = (Event) => {
+    setRow(parseInt(Event.target.value))
+  }
+
+  return (
+    <>
+      <select onChange={rowHandler}>
+        <option value="2">2</option>
+        <option value="4">4</option>
+        <option value="6">6</option>
+        <option value="8">8</option>
+      </select>
+      <Table data={array} columns={column} rowLimit={row} />
+    </>
+  )
+}
 
 export default App

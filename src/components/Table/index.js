@@ -24,12 +24,14 @@ const Table = ({ columns, data, rowLimit }) => {
 
   useEffect(() => {
     setPerPage(rowLimit)
+    setDisplayArr(paginator(data, 1, rowLimit))
   }, [rowLimit])
 
   const sortHanlder = (key, order) => {
-    const copy = [...displayArr]
+    const copy = [...info]
     setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
-    setDisplayArr(copy.sort(compareValues(key, order)))
+    const beforePage = copy.sort(compareValues(key, order))
+    setDisplayArr(paginator(beforePage, 1, perPage))
   }
 
   const generatePages = (infoArr, limit) => {
