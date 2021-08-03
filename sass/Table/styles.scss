@@ -7,22 +7,15 @@
   vertical-align: baseline;
 }
 
-%defaultTableProps {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
 .tableStyle {
+  display: flex;
   width: 100%;
   @extend %defaultProps;
 
-  &__inner {
-    @extend %defaultProps;
-  }
-
   &__table {
+    display: flex;
+    flex: 1;
     @extend %defaultProps;
-    @extend %defaultTableProps;
   }
 
   &__head,
@@ -32,7 +25,7 @@
     width: 100%;
   }
 
-  &__row {
+  &__row, &__column {
     @extend %defaultProps;
   }
 

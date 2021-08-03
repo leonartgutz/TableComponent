@@ -1,46 +1,61 @@
-/* eslint-disable no-plusplus */
-/* eslint-disable no-prototype-builtins */
 /* eslint-disable react/no-array-index-key */
-import React, { useEffect, useState } from 'react'
+/* eslint-disable no-plusplus */
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from 'react'
 import './styles.css'
 import PropTypes from 'prop-types'
+import TableColumn from './TableColumn'
+import TableRow from './TableRow'
 import TableHead from './TableHead'
-import TableBody from './TableBody'
-import TableCell from './TableCell'
 import TableFooter from './TableFooter'
 import paginator from './utils/paginator'
 import compareValues from './utils/compareValues'
+
+const defaultPagination = {
+  currentPage: 1,
+  totalPages: 1,
+}
 
 const Table = ({ columns, data, rowLimit }) => {
   const [info, setInfo] = useState([])
   const [sortOrder, setSortOrder] = useState('desc')
   const [perPage, setPerPage] = useState(rowLimit)
   const [displayArr, setDisplayArr] = useState([])
+  const [pagination, setPagination] = useState({})
 
   useEffect(() => {
+    const paginationResult = paginator(data, 1, rowLimit)
+
     setInfo(data)
-    setDisplayArr(paginator(data, 1, perPage))
+    setDisplayArr(paginationResult.data)
   }, [data])
 
   useEffect(() => {
+    const paginationResult = paginator(data, 1, rowLimit)
+
+    setPagination({
+      currentPage: paginationResult.currentPage,
+      totalPages: paginationResult.totalPages,
+    })
+
     setPerPage(rowLimit)
-    setDisplayArr(paginator(data, 1, rowLimit))
+    setDisplayArr(paginationResult.data)
   }, [rowLimit])
 
   const sortHanlder = (key, order) => {
     const copy = [...info]
     setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
     const beforePage = copy.sort(compareValues(key, order))
-    setDisplayArr(paginator(beforePage, 1, perPage))
+    setDisplayArr(paginator(beforePage, 1, perPage).data)
   }
 
-  const generatePages = (infoArr, limit) => {
+  const generatePages = (total) => {
     const pages = []
 
-    for (let i = 1; i <= Math.ceil(infoArr.length / limit); i++) {
+    for (let i = 1; i <= total; i++) {
       pages.push(
         <li key={i}>
-          <button type="button" onClick={() => setDisplayArr(paginator(info, i, perPage))}>
+          <button type="button" onClick={() => setDisplayArr(paginator(info, i, perPage).data)}>
             {i}
           </button>
         </li>,
@@ -52,24 +67,27 @@ const Table = ({ columns, data, rowLimit }) => {
 
   return (
     <div className="tableStyle">
-      <div className="tableStyle__inner">
-        <table className="tableStyle__table">
-          <TableHead>
-            {columns.map((cell, index) => (
-              <TableCell key={index} colWidth={cell.width}>
-                {cell.text}
-                <button type="button" onClick={() => sortHanlder(cell.dataField, sortOrder)}>
-                  Sort
-                </button>
-              </TableCell>
+      <div className="tableStyle__table">
+        {columns.map((column) => (
+          <TableColumn width={column.width}>
+            <TableHead>
+              {column.text}
+              <button type="button" onClick={() => sortHanlder(column.dataField, sortOrder)}>
+                Sort
+              </button>
+            </TableHead>
+            {displayArr.map((row) => (
+              <TableRow row={row} column={column} />
             ))}
-          </TableHead>
-          <TableBody data={displayArr} columns={columns} />
-          <TableFooter columns={columns} />
-        </table>
+            <TableFooter>
+              {column.footer}
+            </TableFooter>
+          </TableColumn>
+        ))}
       </div>
+
       <div className="tableStyle__pagination">
-        <ul>{generatePages(info, perPage)}</ul>
+        <ul>{generatePages(pagination.totalPages)}</ul>
       </div>
     </div>
   )

@@ -2,11 +2,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import '../styles.css'
+import TableCell from '../TableCell'
 
 const TableHead = ({ children }) => (
-  <thead className="tableStyle__head">
-    <tr>{children}</tr>
-  </thead>
+  <div className="tableStyle__head">
+    <TableCell>
+      {children}
+    </TableCell>
+  </div>
 )
 
 TableHead.propTypes = {

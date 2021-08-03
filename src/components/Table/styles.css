@@ -1,4 +1,4 @@
-.tableStyle__pagination li, .tableStyle__pagination ul, .tableStyle__pagination, .tableStyle__cell, .tableStyle__row, .tableStyle__head, .tableStyle__footer, .tableStyle__body, .tableStyle__table, .tableStyle__inner, .tableStyle {
+.tableStyle__pagination li, .tableStyle__pagination ul, .tableStyle__pagination, .tableStyle__cell, .tableStyle__row, .tableStyle__column, .tableStyle__head, .tableStyle__footer, .tableStyle__body, .tableStyle__table, .tableStyle {
   margin: 0;
   padding: 0;
   border: 0;
@@ -7,13 +7,13 @@
   vertical-align: baseline;
 }
 
-.tableStyle__table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
 .tableStyle {
+  display: flex;
   width: 100%;
+}
+.tableStyle__table {
+  display: flex;
+  flex: 1;
 }
 .tableStyle__head, .tableStyle__footer, .tableStyle__body {
   width: 100%;

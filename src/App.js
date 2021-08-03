@@ -7,6 +7,7 @@ const array = [
     id: 1,
     name: 'Leonart',
     value: 3.35,
+    lastName: 'Gutz',
   },
   {
     id: 2,
@@ -37,6 +38,7 @@ const array = [
     id: 7,
     name: 'Marina',
     value: 4.23,
+    lastName: 'Lemos',
   },
   {
     id: 8,
@@ -56,13 +58,19 @@ const column = [
     dataField: 'name',
     text: 'NAME',
     footer: 'NAME',
-    width: 100,
+    width: 200,
   },
   {
     dataField: 'value',
     text: 'VALUE',
     footer: 'VALUE',
     width: 100,
+  },
+  {
+    dataField: 'lastName',
+    text: 'LAST NAME',
+    footer: 'LAST NAME',
+    width: 300,
   },
 ]
 
