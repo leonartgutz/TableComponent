@@ -1,0 +1,6 @@
+@mixin flexGen($direction, $wrap, $justify, $align) {
+  display: flex !important;
+  flex-flow: $direction $wrap !important;
+  justify-content: $justify !important;
+  align-items: $align !important;
+}

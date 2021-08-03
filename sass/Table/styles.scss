@@ -1,0 +1,56 @@
+%defaultProps {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+%defaultTableProps {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.tableStyle {
+  width: 100%;
+  @extend %defaultProps;
+
+  &__inner {
+    @extend %defaultProps;
+  }
+
+  &__table {
+    @extend %defaultProps;
+    @extend %defaultTableProps;
+  }
+
+  &__head,
+  &__footer,
+  &__body {
+    @extend %defaultProps;
+    width: 100%;
+  }
+
+  &__row {
+    @extend %defaultProps;
+  }
+
+  &__cell {
+    /* Do not give a width */
+    @extend %defaultProps;
+  }
+
+  &__pagination {
+    @extend %defaultProps;
+
+    ul {
+      @extend %defaultProps;
+      list-style: none;
+    }
+
+    li {
+      @extend %defaultProps;
+    }
+  }
+}

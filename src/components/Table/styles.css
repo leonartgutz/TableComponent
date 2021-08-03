@@ -1,0 +1,26 @@
+.tableStyle__pagination li, .tableStyle__pagination ul, .tableStyle__pagination, .tableStyle__cell, .tableStyle__row, .tableStyle__head, .tableStyle__footer, .tableStyle__body, .tableStyle__table, .tableStyle__inner, .tableStyle {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+.tableStyle__table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.tableStyle {
+  width: 100%;
+}
+.tableStyle__head, .tableStyle__footer, .tableStyle__body {
+  width: 100%;
+}
+.tableStyle__cell {
+  /* Do not give a width */
+}
+.tableStyle__pagination ul {
+  list-style: none;
+}
