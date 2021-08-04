@@ -99,8 +99,8 @@ const Table = ({ columns, data, rowLimit }) => {
                       Sort
                     </button>
                   </TableHead>
-                  {displayArr.map((row) => (
-                    <TableRow row={row} column={column} />
+                  {displayArr.map((row, rowIndex) => (
+                    <TableRow key={rowIndex} row={row} column={column} index={rowIndex} />
                   ))}
                   <TableFooter>
                     {column.footer}

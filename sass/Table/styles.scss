@@ -25,12 +25,23 @@
     width: 100%;
   }
 
-  &__row, &__column {
-    @extend %defaultProps;
-  }
-
   &__column {
     border: 1px solid black;
+  }
+
+  &__row {
+
+    &--hover {
+      background: red;
+    }
+
+    &--click {
+      background: green;
+    }
+  }
+
+  &__row, &__column {
+    @extend %defaultProps;
   }
 
   &__cell {

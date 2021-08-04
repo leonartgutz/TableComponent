@@ -21,6 +21,12 @@
 .tableStyle__column {
   border: 1px solid black;
 }
+.tableStyle__row--hover {
+  background: red;
+}
+.tableStyle__row--click {
+  background: green;
+}
 .tableStyle__cell {
   /* Do not give a width */
 }
