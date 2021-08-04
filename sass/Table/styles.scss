@@ -27,20 +27,21 @@
 
   &__column {
     border: 1px solid black;
+    min-width: 100px;
   }
 
   &__row {
-
     &--hover {
       background: red;
     }
 
-    &--click {
+    &--selected {
       background: green;
     }
   }
 
-  &__row, &__column {
+  &__row,
+  &__column {
     @extend %defaultProps;
   }
 
@@ -60,5 +61,12 @@
     li {
       @extend %defaultProps;
     }
+  }
+
+  &__resizer {
+    background: grey;
+    padding: 1rem;
+    display: block;
+    cursor: col-resize;
   }
 }

@@ -20,11 +20,12 @@
 }
 .tableStyle__column {
   border: 1px solid black;
+  min-width: 100px;
 }
 .tableStyle__row--hover {
   background: red;
 }
-.tableStyle__row--click {
+.tableStyle__row--selected {
   background: green;
 }
 .tableStyle__cell {
@@ -32,4 +33,10 @@
 }
 .tableStyle__pagination ul {
   list-style: none;
+}
+.tableStyle__resizer {
+  background: grey;
+  padding: 1rem;
+  display: block;
+  cursor: col-resize;
 }

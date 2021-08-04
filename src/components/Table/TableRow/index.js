@@ -28,15 +28,18 @@ const TableRow = ({ column, row, index }) => {
   const clickHandler = (rowIndex) => {
     const elements = document.querySelectorAll(`.tableStyle__row-${rowIndex}`)
     Object.values(elements).map((element) => {
-      element.classList.toggle('tableStyle__row--click')
+      element.classList.toggle('tableStyle__row--selected')
     })
   }
 
   return (
-    <div className={`tableStyle__row tableStyle__row-${index}`} onClick={() => clickHandler(index)} onMouseOver={() => hoverEnterHandler(index)} onMouseLeave={() => hoverLeaveHandler(index)}>
-      <TableCell>
-        {row[column.dataField] ? row[column.dataField] : ''}
-      </TableCell>
+    <div
+      className={`tableStyle__row tableStyle__row-${index}`}
+      onClick={() => clickHandler(index)}
+      onMouseOver={() => hoverEnterHandler(index)}
+      onMouseLeave={() => hoverLeaveHandler(index)}
+    >
+      <TableCell>{row[column.dataField] ? row[column.dataField] : ''}</TableCell>
     </div>
   )
 }

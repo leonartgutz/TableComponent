@@ -50,7 +50,7 @@ const column = [
     dataField: 'id',
     text: 'ID',
     footer: 'ID',
-    width: 100,
+    width: 300,
   },
   {
     dataField: 'name',
@@ -81,7 +81,7 @@ const App = () => {
         <option value="6">6</option>
         <option value="8">8</option>
       </select>
-      <Table data={array} columns={column} rowLimit={row} />
+      <Table data={array} columns={column} rowLimit={row} isDraggable isResizable />
     </>
   )
 }

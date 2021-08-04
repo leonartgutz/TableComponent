@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable consistent-return */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/no-array-index-key */
@@ -13,7 +14,7 @@ import TableFooter from './TableFooter'
 import paginator from './utils/paginator'
 import compareValues from './utils/compareValues'
 
-const Table = ({ columns, data, rowLimit }) => {
+const Table = ({ columns, data, rowLimit, isDraggable, isResizable }) => {
   const [info, setInfo] = useState([])
   const [sortOrder, setSortOrder] = useState('desc')
   const [perPage, setPerPage] = useState(rowLimit)
@@ -64,9 +65,7 @@ const Table = ({ columns, data, rowLimit }) => {
   }
 
   const onDragEnd = (result) => {
-    const {
-      destination, source, draggableId,
-    } = result
+    const { destination, source, draggableId } = result
 
     const colId = draggableId.split('column-')[1]
 
@@ -92,8 +91,13 @@ const Table = ({ columns, data, rowLimit }) => {
           {(provided) => (
             <div className="tableStyle__table" {...provided.droppableProps} ref={provided.innerRef}>
               {testCol.map((column, index) => (
-                <TableColumn key={`column-${index}`} column={index} width={column.width}>
-                  <TableHead>
+                <TableColumn
+                  key={`column-${index}`}
+                  column={index}
+                  isDraggable={isDraggable}
+                  isResizable={isResizable}
+                >
+                  <TableHead width={column.width}>
                     {column.text}
                     <button type="button" onClick={() => sortHanlder(column.dataField, sortOrder)}>
                       Sort
@@ -102,15 +106,12 @@ const Table = ({ columns, data, rowLimit }) => {
                   {displayArr.map((row, rowIndex) => (
                     <TableRow key={rowIndex} row={row} column={column} index={rowIndex} />
                   ))}
-                  <TableFooter>
-                    {column.footer}
-                  </TableFooter>
+                  <TableFooter>{column.footer}</TableFooter>
                 </TableColumn>
               ))}
               {provided.placeholder}
             </div>
           )}
-
         </Droppable>
 
         <div className="tableStyle__pagination">
@@ -131,10 +132,14 @@ Table.propTypes = {
     }),
   ).isRequired,
   rowLimit: PropTypes.number,
+  isDraggable: PropTypes.bool,
+  isResizable: PropTypes.bool,
 }
 
 Table.defaultProps = {
   rowLimit: 20,
+  isDraggable: true,
+  isResizable: true,
 }
 
 export default Table
