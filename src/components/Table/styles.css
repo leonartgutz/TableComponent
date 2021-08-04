@@ -18,9 +18,25 @@
 .tableStyle__head, .tableStyle__footer, .tableStyle__body {
   width: 100%;
 }
+.tableStyle__head {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
 .tableStyle__column {
   border: 1px solid black;
   min-width: 100px;
+  background: #eee;
+}
+.tableStyle__scrollArea {
+  flex: 1;
+  min-height: 300px;
+  max-height: 300px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+.tableStyle__scrollArea::-webkit-scrollbar {
+  display: none;
 }
 .tableStyle__row--hover {
   background: red;
@@ -29,7 +45,7 @@
   background: green;
 }
 .tableStyle__cell {
-  /* Do not give a width */
+  width: 100%;
 }
 .tableStyle__pagination ul {
   list-style: none;

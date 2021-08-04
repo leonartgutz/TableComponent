@@ -5,8 +5,8 @@ import '../styles.css'
 import TableCell from '../TableCell'
 
 const TableHead = ({ children, width }) => (
-  <div className="tableStyle__head" style={{ width }}>
-    <TableCell>{children}</TableCell>
+  <div className="tableStyle__head">
+    <TableCell minWidth={width}>{children}</TableCell>
   </div>
 )
 

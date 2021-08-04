@@ -13,6 +13,7 @@ import TableHead from './TableHead'
 import TableFooter from './TableFooter'
 import paginator from './utils/paginator'
 import compareValues from './utils/compareValues'
+import TableScrollArea from './TableScrollArea'
 
 const Table = ({ columns, data, rowLimit, isDraggable, isResizable }) => {
   const [info, setInfo] = useState([])
@@ -20,7 +21,7 @@ const Table = ({ columns, data, rowLimit, isDraggable, isResizable }) => {
   const [perPage, setPerPage] = useState(rowLimit)
   const [displayArr, setDisplayArr] = useState([])
   const [pagination, setPagination] = useState({})
-  const [testCol, setTestCol] = useState(columns)
+  const [displayCol, setDisplayCol] = useState(columns)
 
   useEffect(() => {
     const paginationResult = paginator(data, 1, rowLimit)
@@ -77,11 +78,11 @@ const Table = ({ columns, data, rowLimit, isDraggable, isResizable }) => {
       return false
     }
 
-    const newArr = [...testCol]
+    const newArr = [...displayCol]
     newArr.splice(source.index, 1)
-    newArr.splice(destination.index, 0, testCol[colId])
+    newArr.splice(destination.index, 0, displayCol[colId])
 
-    setTestCol(newArr)
+    setDisplayCol(newArr)
   }
 
   return (
@@ -90,7 +91,7 @@ const Table = ({ columns, data, rowLimit, isDraggable, isResizable }) => {
         <Droppable droppableId="DroppableId" direction="horizontal" type="column">
           {(provided) => (
             <div className="tableStyle__table" {...provided.droppableProps} ref={provided.innerRef}>
-              {testCol.map((column, index) => (
+              {displayCol.map((column, index) => (
                 <TableColumn
                   key={`column-${index}`}
                   column={index}
@@ -98,14 +99,15 @@ const Table = ({ columns, data, rowLimit, isDraggable, isResizable }) => {
                   isResizable={isResizable}
                 >
                   <TableHead width={column.width}>
-                    {column.text}
                     <button type="button" onClick={() => sortHanlder(column.dataField, sortOrder)}>
-                      Sort
+                      {column.text}
                     </button>
                   </TableHead>
-                  {displayArr.map((row, rowIndex) => (
-                    <TableRow key={rowIndex} row={row} column={column} index={rowIndex} />
-                  ))}
+                  <TableScrollArea index={index}>
+                    {displayArr.map((row, rowIndex) => (
+                      <TableRow key={rowIndex} row={row} column={column} index={rowIndex} />
+                    ))}
+                  </TableScrollArea>
                   <TableFooter>{column.footer}</TableFooter>
                 </TableColumn>
               ))}

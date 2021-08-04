@@ -25,9 +25,28 @@
     width: 100%;
   }
 
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+  }
+
   &__column {
     border: 1px solid black;
     min-width: 100px;
+    background: #eee;
+  }
+
+  &__scrollArea {
+    flex: 1;
+    min-height: 300px;
+    max-height: 300px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   &__row {
@@ -46,8 +65,8 @@
   }
 
   &__cell {
-    /* Do not give a width */
     @extend %defaultProps;
+    width: 100%;
   }
 
   &__pagination {
