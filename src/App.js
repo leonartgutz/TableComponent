@@ -1,6 +1,9 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable radix */
 import React, { useState } from 'react'
 import Table from './components/Table'
+
+const LinkTest = () => <a href="#">Marina</a>
 
 const array = [
   {
@@ -115,7 +118,7 @@ const array = [
   },
   {
     id: 7,
-    name: 'Marina',
+    name: <LinkTest />,
     value: 4.23,
   },
   {
@@ -141,7 +144,7 @@ const column = [
   {
     dataField: 'value',
     text: 'VALUE',
-    footer: 'VALUE',
+    footer: <LinkTest />,
     width: 100,
   },
 ]

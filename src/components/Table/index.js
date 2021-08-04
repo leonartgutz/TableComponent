@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable object-curly-newline */
 /* eslint-disable consistent-return */
 /* eslint-disable react/jsx-props-no-spreading */
@@ -129,8 +130,8 @@ Table.propTypes = {
   columns: PropTypes.arrayOf(
     PropTypes.shape({
       dataField: PropTypes.string.isRequired,
-      text: PropTypes.string.isRequired,
-      footer: PropTypes.string.isRequired,
+      text: PropTypes.any.isRequired,
+      footer: PropTypes.any.isRequired,
     }),
   ).isRequired,
   rowLimit: PropTypes.number,
