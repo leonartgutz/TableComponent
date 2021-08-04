@@ -1,9 +1,11 @@
+/* eslint-disable consistent-return */
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-plusplus */
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import './styles.css'
 import PropTypes from 'prop-types'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import TableColumn from './TableColumn'
 import TableRow from './TableRow'
 import TableHead from './TableHead'
@@ -11,17 +13,13 @@ import TableFooter from './TableFooter'
 import paginator from './utils/paginator'
 import compareValues from './utils/compareValues'
 
-const defaultPagination = {
-  currentPage: 1,
-  totalPages: 1,
-}
-
 const Table = ({ columns, data, rowLimit }) => {
   const [info, setInfo] = useState([])
   const [sortOrder, setSortOrder] = useState('desc')
   const [perPage, setPerPage] = useState(rowLimit)
   const [displayArr, setDisplayArr] = useState([])
   const [pagination, setPagination] = useState({})
+  const [testCol, setTestCol] = useState(columns)
 
   useEffect(() => {
     const paginationResult = paginator(data, 1, rowLimit)
@@ -65,31 +63,61 @@ const Table = ({ columns, data, rowLimit }) => {
     return pages
   }
 
-  return (
-    <div className="tableStyle">
-      <div className="tableStyle__table">
-        {columns.map((column) => (
-          <TableColumn width={column.width}>
-            <TableHead>
-              {column.text}
-              <button type="button" onClick={() => sortHanlder(column.dataField, sortOrder)}>
-                Sort
-              </button>
-            </TableHead>
-            {displayArr.map((row) => (
-              <TableRow row={row} column={column} />
-            ))}
-            <TableFooter>
-              {column.footer}
-            </TableFooter>
-          </TableColumn>
-        ))}
-      </div>
+  const onDragEnd = (result) => {
+    const {
+      destination, source, draggableId,
+    } = result
 
-      <div className="tableStyle__pagination">
-        <ul>{generatePages(pagination.totalPages)}</ul>
+    const colId = draggableId.split('column-')[1]
+
+    if (!destination) {
+      return false
+    }
+
+    if (destination.droppableId === source.droppableId && destination.index === source.index) {
+      return false
+    }
+
+    const newArr = [...testCol]
+    newArr.splice(source.index, 1)
+    newArr.splice(destination.index, 0, testCol[colId])
+
+    setTestCol(newArr)
+  }
+
+  return (
+    <DragDropContext onDragEnd={onDragEnd}>
+      <div className="tableStyle">
+        <Droppable droppableId="DroppableId" direction="horizontal" type="column">
+          {(provided) => (
+            <div className="tableStyle__table" {...provided.droppableProps} ref={provided.innerRef}>
+              {testCol.map((column, index) => (
+                <TableColumn key={`column-${index}`} column={index} width={column.width}>
+                  <TableHead>
+                    {column.text}
+                    <button type="button" onClick={() => sortHanlder(column.dataField, sortOrder)}>
+                      Sort
+                    </button>
+                  </TableHead>
+                  {displayArr.map((row) => (
+                    <TableRow row={row} column={column} />
+                  ))}
+                  <TableFooter>
+                    {column.footer}
+                  </TableFooter>
+                </TableColumn>
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+
+        </Droppable>
+
+        <div className="tableStyle__pagination">
+          <ul>{generatePages(pagination.totalPages)}</ul>
+        </div>
       </div>
-    </div>
+    </DragDropContext>
   )
 }
 

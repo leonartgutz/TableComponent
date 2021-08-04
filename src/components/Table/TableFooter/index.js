@@ -5,7 +5,7 @@ import '../styles.css'
 import TableCell from '../TableCell'
 
 const TableFooter = ({ children }) => (
-  <div className="tableStyle__head">
+  <div className="tableStyle__footer">
     <TableCell>
       {children}
     </TableCell>

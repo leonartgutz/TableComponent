@@ -29,6 +29,10 @@
     @extend %defaultProps;
   }
 
+  &__column {
+    border: 1px solid black;
+  }
+
   &__cell {
     /* Do not give a width */
     @extend %defaultProps;
