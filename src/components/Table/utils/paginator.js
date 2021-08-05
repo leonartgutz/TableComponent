@@ -1,14 +1,21 @@
 const paginator = (items, currentPage, limit) => {
-  const offset = (currentPage - 1) * limit
-
-  const paginatedItems = items.slice(offset).slice(0, limit)
   const totalPages = Math.ceil(items.length / limit)
 
+  let offset = 0
+  let actualPage = 1
+
+  if (currentPage <= totalPages) {
+    offset = (currentPage - 1) * limit
+    actualPage = currentPage
+  }
+
+  const paginatedItems = items.slice(offset).slice(0, limit)
+
   return {
-    currentPage,
+    currentPage: actualPage,
     limit,
-    pre_page: currentPage - 1 ? currentPage - 1 : null,
-    next_page: totalPages > currentPage ? currentPage + 1 : null,
+    prePage: currentPage - 1 ? currentPage - 1 : null,
+    nextPage: totalPages > currentPage ? currentPage + 1 : null,
     total: items.length,
     totalPages,
     data: paginatedItems,

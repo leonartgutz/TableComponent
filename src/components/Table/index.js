@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable object-curly-newline */
 /* eslint-disable consistent-return */
@@ -17,53 +18,36 @@ import compareValues from './utils/compareValues'
 import TableScrollArea from './TableScrollArea'
 
 const Table = ({ columns, data, rowLimit, isDraggable, isResizable }) => {
-  const [info, setInfo] = useState([])
+  const [info, setInfo] = useState(data)
   const [sortOrder, setSortOrder] = useState('desc')
   const [perPage, setPerPage] = useState(rowLimit)
   const [displayArr, setDisplayArr] = useState([])
   const [pagination, setPagination] = useState({})
   const [displayCol, setDisplayCol] = useState(columns)
+  const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
-    const paginationResult = paginator(data, 1, rowLimit)
+    const paginationResult = paginator(data, currentPage, rowLimit)
 
     setInfo(data)
     setDisplayArr(paginationResult.data)
-  }, [data])
-
-  useEffect(() => {
-    const paginationResult = paginator(data, 1, rowLimit)
-
     setPagination({
-      currentPage: paginationResult.currentPage,
       totalPages: paginationResult.totalPages,
+      nextPage: paginationResult.nextPage,
+      prevPage: paginationResult.prePage,
     })
 
+    setCurrentPage(paginationResult.currentPage)
+
     setPerPage(rowLimit)
-    setDisplayArr(paginationResult.data)
   }, [rowLimit])
 
   const sortHanlder = (key, order) => {
     const copy = [...info]
     setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
     const beforePage = copy.sort(compareValues(key, order))
-    setDisplayArr(paginator(beforePage, 1, perPage).data)
-  }
-
-  const generatePages = (total) => {
-    const pages = []
-
-    for (let i = 1; i <= total; i++) {
-      pages.push(
-        <li key={i}>
-          <button type="button" onClick={() => setDisplayArr(paginator(info, i, perPage).data)}>
-            {i}
-          </button>
-        </li>,
-      )
-    }
-
-    return pages
+    setInfo(beforePage)
+    setDisplayArr(paginator(beforePage, currentPage, perPage).data)
   }
 
   const onDragEnd = (result) => {
@@ -84,6 +68,45 @@ const Table = ({ columns, data, rowLimit, isDraggable, isResizable }) => {
     newArr.splice(destination.index, 0, displayCol[colId])
 
     setDisplayCol(newArr)
+  }
+
+  const changePage = (page) => {
+    const paginationResult = paginator(info, page, perPage)
+    setCurrentPage(page)
+    setDisplayArr(paginationResult.data)
+    setPagination({
+      ...pagination,
+      nextPage: paginationResult.nextPage,
+      prevPage: paginationResult.prePage,
+    })
+  }
+
+  const generatePages = (currentPage, totalPages) => {
+    const pages = []
+
+    pages.push(<li><button type="button" onClick={() => changePage(1)} disabled={currentPage <= 1}>first</button></li>)
+
+    pages.push(<li><button type="button" onClick={() => changePage(currentPage - 1)} disabled={currentPage - 1 <= 0}>prev</button></li>)
+
+    for (let i = 2; i >= 1; i--) {
+      if (currentPage - i > 0) {
+        pages.push(<li key={`prev-${i}`}><button type="button" onClick={() => changePage(currentPage - i)}>{currentPage - i}</button></li>)
+      }
+    }
+
+    pages.push(<li key="pages-current"><button type="button" disabled>{currentPage}</button></li>)
+
+    for (let i = 1; i <= 2; i++) {
+      if (currentPage + i <= totalPages) {
+        pages.push(<li key={`next-${i}`}><button type="button" onClick={() => changePage(currentPage + i)}>{currentPage + i}</button></li>)
+      }
+    }
+
+    pages.push(<li><button type="button" onClick={() => changePage(currentPage + 1)} disabled={currentPage + 1 > totalPages}>next</button></li>)
+
+    pages.push(<li><button type="button" onClick={() => changePage(totalPages)} disabled={currentPage >= totalPages}>last</button></li>)
+
+    return pages
   }
 
   return (
@@ -118,7 +141,9 @@ const Table = ({ columns, data, rowLimit, isDraggable, isResizable }) => {
         </Droppable>
 
         <div className="tableStyle__pagination">
-          <ul>{generatePages(pagination.totalPages)}</ul>
+          <ul>
+            {generatePages(currentPage, pagination.totalPages)}
+          </ul>
         </div>
       </div>
     </DragDropContext>

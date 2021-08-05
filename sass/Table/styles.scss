@@ -40,13 +40,13 @@
   &__scrollArea {
     flex: 1;
     min-height: 300px;
-    max-height: 300px;
-    overflow-y: scroll;
-    scrollbar-width: none;
+    // max-height: 300px;
+    // overflow-y: scroll;
+    // scrollbar-width: none;
 
-    &::-webkit-scrollbar {
-      display: none;
-    }
+    // &::-webkit-scrollbar {
+    //   display: none;
+    // }
   }
 
   &__row {

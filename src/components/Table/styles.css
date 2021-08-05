@@ -31,12 +31,6 @@
 .tableStyle__scrollArea {
   flex: 1;
   min-height: 300px;
-  max-height: 300px;
-  overflow-y: scroll;
-  scrollbar-width: none;
-}
-.tableStyle__scrollArea::-webkit-scrollbar {
-  display: none;
 }
 .tableStyle__row--hover {
   background: red;

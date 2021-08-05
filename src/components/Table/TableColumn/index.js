@@ -22,7 +22,7 @@ const TableColumn = ({ children, column, isDraggable, isResizable }) => {
             {...provided.draggableProps}
             ref={provided.innerRef}
           >
-            <span {...provided.dragHandleProps}>Drag</span>
+            <span {...provided.dragHandleProps} title="Drag and Drop">Drag</span>
             {children}
 
             {isResizable ? <span className="tableStyle__resizer">Resize</span> : ''}

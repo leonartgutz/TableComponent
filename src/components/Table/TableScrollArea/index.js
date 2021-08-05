@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
 /* eslint-disable jsx-a11y/mouse-events-have-key-events */
 /* eslint-disable no-shadow */
@@ -21,6 +22,8 @@ const TableScrollArea = ({ children, index }) => {
   return (
     <div
       onScroll={(e) => scrollHandler(e, index)}
+      // onWheelCapture={(e) => scrollHandler(e, index)}
+      // onWheel={(e) => scrollHandler(e, index)}
       className={`tableStyle__scrollArea tableStyle__scroll-${index}`}
     >
       {children}
