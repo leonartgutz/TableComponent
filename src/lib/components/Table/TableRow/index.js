@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable array-callback-return */
@@ -39,7 +40,11 @@ const TableRow = ({ column, row, index }) => {
       onMouseOver={() => hoverEnterHandler(index)}
       onMouseLeave={() => hoverLeaveHandler(index)}
     >
-      <TableCell>{row[column.dataField] ? row[column.dataField] : ''}</TableCell>
+      {column.formatter ? (
+        column.formatter(row[column.dataField], row)
+      ) : (
+        <TableCell>{row[column.dataField] ? row[column.dataField] : ''}</TableCell>
+      )}
     </div>
   )
 }

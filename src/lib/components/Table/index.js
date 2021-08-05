@@ -84,27 +84,81 @@ const Table = ({ columns, data, rowLimit, isDraggable, isResizable }) => {
   const generatePages = (currentPage, totalPages) => {
     const pages = []
 
-    pages.push(<li><button type="button" onClick={() => changePage(1)} disabled={currentPage <= 1}>first</button></li>)
+    pages.push(
+      <li>
+        <button type="button" onClick={() => changePage(1)} disabled={currentPage <= 1}>
+          first
+        </button>
+      </li>,
+    )
 
-    pages.push(<li><button type="button" onClick={() => changePage(currentPage - 1)} disabled={currentPage - 1 <= 0}>prev</button></li>)
+    pages.push(
+      <li>
+        <button
+          type="button"
+          onClick={() => changePage(currentPage - 1)}
+          disabled={currentPage - 1 <= 0}
+        >
+          prev
+        </button>
+      </li>,
+    )
 
     for (let i = 2; i >= 1; i--) {
       if (currentPage - i > 0) {
-        pages.push(<li key={`prev-${i}`}><button type="button" onClick={() => changePage(currentPage - i)}>{currentPage - i}</button></li>)
+        pages.push(
+          <li key={`prev-${i}`}>
+            <button type="button" onClick={() => changePage(currentPage - i)}>
+              {currentPage - i}
+            </button>
+          </li>,
+        )
       }
     }
 
-    pages.push(<li key="pages-current"><button type="button" disabled>{currentPage}</button></li>)
+    pages.push(
+      <li key="pages-current">
+        <button type="button" disabled>
+          {currentPage}
+        </button>
+      </li>,
+    )
 
     for (let i = 1; i <= 2; i++) {
       if (currentPage + i <= totalPages) {
-        pages.push(<li key={`next-${i}`}><button type="button" onClick={() => changePage(currentPage + i)}>{currentPage + i}</button></li>)
+        pages.push(
+          <li key={`next-${i}`}>
+            <button type="button" onClick={() => changePage(currentPage + i)}>
+              {currentPage + i}
+            </button>
+          </li>,
+        )
       }
     }
 
-    pages.push(<li><button type="button" onClick={() => changePage(currentPage + 1)} disabled={currentPage + 1 > totalPages}>next</button></li>)
+    pages.push(
+      <li>
+        <button
+          type="button"
+          onClick={() => changePage(currentPage + 1)}
+          disabled={currentPage + 1 > totalPages}
+        >
+          next
+        </button>
+      </li>,
+    )
 
-    pages.push(<li><button type="button" onClick={() => changePage(totalPages)} disabled={currentPage >= totalPages}>last</button></li>)
+    pages.push(
+      <li>
+        <button
+          type="button"
+          onClick={() => changePage(totalPages)}
+          disabled={currentPage >= totalPages}
+        >
+          last
+        </button>
+      </li>,
+    )
 
     return pages
   }
@@ -132,7 +186,9 @@ const Table = ({ columns, data, rowLimit, isDraggable, isResizable }) => {
                       <TableRow key={rowIndex} row={row} column={column} index={rowIndex} />
                     ))}
                   </TableScrollArea>
-                  <TableFooter>{column.footer}</TableFooter>
+                  <TableFooter>
+                    {column.footerFormatter ? column.footerFormatter(column, index) : column.footer}
+                  </TableFooter>
                 </TableColumn>
               ))}
               {provided.placeholder}
@@ -141,9 +197,7 @@ const Table = ({ columns, data, rowLimit, isDraggable, isResizable }) => {
         </Droppable>
 
         <div className="tableStyle__pagination">
-          <ul>
-            {generatePages(currentPage, pagination.totalPages)}
-          </ul>
+          <ul>{generatePages(currentPage, pagination.totalPages)}</ul>
         </div>
       </div>
     </DragDropContext>

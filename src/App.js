@@ -140,6 +140,8 @@ const column = [
     text: 'NAME',
     footer: 'NAME',
     width: 200,
+    formatter: (val, { value }) => console.log(val, '----->', value),
+    footerFormatter: (val) => console.log(val),
   },
   {
     dataField: 'value',
