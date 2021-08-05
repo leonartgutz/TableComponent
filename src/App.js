@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable radix */
 import React, { useState } from 'react'
-import Table from './components/Table'
+import { Table } from './lib'
 
 const LinkTest = () => <a href="#">Marina</a>
 
