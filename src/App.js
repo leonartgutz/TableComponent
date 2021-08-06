@@ -168,22 +168,20 @@ const column = [
     text: 'NAME',
     footer: 'NAME',
     width: 200,
-    sort: true,
   },
   {
     dataField: 'value',
     text: 'VALUE',
     footer: 'VALUE',
-    sort: false,
     width: 100,
   },
   {
     dataField: 'date',
     text: 'DATE',
     footer: 'DATE',
-    sort: true,
-    width: 100,
+    width: 200,
     sortFunction: compareByPeriod,
+    sort: true,
   },
 ]
 

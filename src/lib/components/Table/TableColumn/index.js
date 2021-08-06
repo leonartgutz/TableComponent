@@ -1,4 +1,3 @@
-/* eslint-disable object-curly-newline */
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect } from 'react'
@@ -6,7 +5,9 @@ import PropTypes from 'prop-types'
 import { Draggable } from 'react-beautiful-dnd'
 import makeResizableDiv from '../utils/resizable'
 
-const TableColumn = ({ children, column, isDraggable, isResizable }) => {
+const TableColumn = ({
+  children, column, isDraggable, isResizable,
+}) => {
   if (isResizable) {
     useEffect(() => {
       makeResizableDiv(`.tableStyle__column-${column}`)
@@ -15,7 +16,7 @@ const TableColumn = ({ children, column, isDraggable, isResizable }) => {
 
   if (isDraggable) {
     return (
-      <Draggable draggableId={`column-${column}`} index={column} test="test">
+      <Draggable draggableId={`column-${column}`} index={column}>
         {(provided) => (
           <div
             className={`tableStyle__column tableStyle__column-${column}`}
@@ -35,8 +36,8 @@ const TableColumn = ({ children, column, isDraggable, isResizable }) => {
   }
   return (
     <div className={`tableStyle__column tableStyle__column-${column}`}>
-      {children}
       {isResizable ? <span className="tableStyle__resizer">Resize</span> : ''}
+      {children}
     </div>
   )
 }

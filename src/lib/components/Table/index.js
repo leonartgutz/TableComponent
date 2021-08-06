@@ -1,10 +1,6 @@
-/* eslint-disable no-shadow */
-/* eslint-disable react/forbid-prop-types */
-/* eslint-disable object-curly-newline */
 /* eslint-disable consistent-return */
-/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/no-array-index-key */
-/* eslint-disable no-plusplus */
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useEffect } from 'react'
 import './styles.css'
 import PropTypes from 'prop-types'
@@ -16,13 +12,16 @@ import TableFooter from './TableFooter'
 import paginator from './utils/paginator'
 import compareValues from './utils/compareValues'
 import TableScrollArea from './TableScrollArea'
+import TablePagination from './TablePagination'
 
-const Table = ({ columns, data, rowLimit, isDraggable, isResizable }) => {
+const Table = ({
+  columns, data, rowLimit, isDraggable, isResizable,
+}) => {
   const [info, setInfo] = useState(data)
   const [sortOrder, setSortOrder] = useState('desc')
   const [perPage, setPerPage] = useState(rowLimit)
   const [displayArr, setDisplayArr] = useState([])
-  const [pagination, setPagination] = useState({})
+  const [totalPages, setTotalPages] = useState(0)
   const [displayCol, setDisplayCol] = useState(columns)
   const [currentPage, setCurrentPage] = useState(1)
   const [lastSort, setLastSort] = useState('')
@@ -32,11 +31,7 @@ const Table = ({ columns, data, rowLimit, isDraggable, isResizable }) => {
 
     setInfo(data)
     setDisplayArr(paginationResult.data)
-    setPagination({
-      totalPages: paginationResult.totalPages,
-      nextPage: paginationResult.nextPage,
-      prevPage: paginationResult.prePage,
-    })
+    setTotalPages(paginationResult.totalPages)
 
     setCurrentPage(paginationResult.currentPage)
 
@@ -85,93 +80,7 @@ const Table = ({ columns, data, rowLimit, isDraggable, isResizable }) => {
     const paginationResult = paginator(info, page, perPage)
     setCurrentPage(page)
     setDisplayArr(paginationResult.data)
-    setPagination({
-      ...pagination,
-      nextPage: paginationResult.nextPage,
-      prevPage: paginationResult.prePage,
-    })
-  }
-
-  const generatePages = (currentPage, totalPages) => {
-    const pages = []
-
-    pages.push(
-      <li key="first">
-        <button type="button" onClick={() => changePage(1)} disabled={currentPage <= 1}>
-          first
-        </button>
-      </li>,
-    )
-
-    pages.push(
-      <li key="back">
-        <button
-          type="button"
-          onClick={() => changePage(currentPage - 1)}
-          disabled={currentPage - 1 <= 0}
-        >
-          prev
-        </button>
-      </li>,
-    )
-
-    for (let i = 2; i >= 1; i--) {
-      if (currentPage - i > 0) {
-        pages.push(
-          <li key={`prev-${i}`}>
-            <button type="button" onClick={() => changePage(currentPage - i)}>
-              {currentPage - i}
-            </button>
-          </li>,
-        )
-      }
-    }
-
-    pages.push(
-      <li key="current-page">
-        <button type="button" disabled>
-          {currentPage}
-        </button>
-      </li>,
-    )
-
-    for (let i = 1; i <= 2; i++) {
-      if (currentPage + i <= totalPages) {
-        pages.push(
-          <li key={`next-${i}`}>
-            <button type="button" onClick={() => changePage(currentPage + i)}>
-              {currentPage + i}
-            </button>
-          </li>,
-        )
-      }
-    }
-
-    pages.push(
-      <li key="next">
-        <button
-          type="button"
-          onClick={() => changePage(currentPage + 1)}
-          disabled={currentPage + 1 > totalPages}
-        >
-          next
-        </button>
-      </li>,
-    )
-
-    pages.push(
-      <li key="last">
-        <button
-          type="button"
-          onClick={() => changePage(totalPages)}
-          disabled={currentPage >= totalPages}
-        >
-          last
-        </button>
-      </li>,
-    )
-
-    return pages
+    setTotalPages(paginationResult.totalPages)
   }
 
   return (
@@ -187,21 +96,18 @@ const Table = ({ columns, data, rowLimit, isDraggable, isResizable }) => {
                   isDraggable={isDraggable}
                   isResizable={isResizable}
                 >
-                  <TableHead width={column.width}>
+                  <TableHead
+                    column={column}
+                    minWidth={column.width}
+                    isSort={column.sort}
+                    sortOrder={sortOrder}
+                    lastSort={lastSort}
+                    customSortFunction={customSortHandler}
+                    sortFunction={sortHanlder}
+                  >
                     {column.text}
-                    {column.sort
-                      ? (
-                        <button type="button" onClick={() => sortHanlder(column.dataField, sortOrder)}>
-                          {lastSort === column.dataField ? sortOrder : 's'}
-                        </button>
-                      )
-                      : ''}
                   </TableHead>
-                  {column.sortFunction ? (
-                    <button type="button" onClick={() => customSortHandler(column.dataField, sortOrder, column.sortFunction)}>
-                      Click Me
-                    </button>
-                  ) : ''}
+
                   <TableScrollArea index={index}>
                     {displayArr.map((row, rowIndex) => (
                       <TableRow key={rowIndex} row={row} column={column} index={rowIndex} />
@@ -217,9 +123,7 @@ const Table = ({ columns, data, rowLimit, isDraggable, isResizable }) => {
           )}
         </Droppable>
 
-        <div className="tableStyle__pagination">
-          <ul>{generatePages(currentPage, pagination.totalPages)}</ul>
-        </div>
+        <TablePagination currentPage={currentPage} totalPages={totalPages} changePage={changePage} />
       </div>
     </DragDropContext>
   )
@@ -230,8 +134,8 @@ Table.propTypes = {
   columns: PropTypes.arrayOf(
     PropTypes.shape({
       dataField: PropTypes.string.isRequired,
-      text: PropTypes.any.isRequired,
-      footer: PropTypes.any.isRequired,
+      text: PropTypes.string.isRequired,
+      footer: PropTypes.string.isRequired,
     }),
   ).isRequired,
   rowLimit: PropTypes.number,
