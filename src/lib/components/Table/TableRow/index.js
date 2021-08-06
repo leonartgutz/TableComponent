@@ -1,11 +1,7 @@
-/* eslint-disable no-shadow */
+/* eslint-disable array-callback-return */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable array-callback-return */
 /* eslint-disable jsx-a11y/mouse-events-have-key-events */
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable react/forbid-prop-types */
 import React from 'react'
 import PropTypes from 'prop-types'
 import '../styles.css'
@@ -40,18 +36,17 @@ const TableRow = ({ column, row, index }) => {
       onMouseOver={() => hoverEnterHandler(index)}
       onMouseLeave={() => hoverLeaveHandler(index)}
     >
-      {column.formatter ? (
-        column.formatter(row[column.dataField], row)
-      ) : (
-        <TableCell>{row[column.dataField] ? row[column.dataField] : ''}</TableCell>
-      )}
+      <TableCell>{column.formatter ? column.formatter(row[column.dataField], row, index) : row[column.dataField]}</TableCell>
     </div>
   )
 }
 
 TableRow.propTypes = {
-  row: PropTypes.object.isRequired,
-  column: PropTypes.object.isRequired,
+  row: PropTypes.shape(PropTypes.object).isRequired,
+  column: PropTypes.shape({
+    dataField: PropTypes.string.isRequired,
+    formatter: PropTypes.func,
+  }).isRequired,
   index: PropTypes.number.isRequired,
 }
 

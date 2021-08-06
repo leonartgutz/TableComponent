@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-shadow */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable radix */
@@ -6,7 +7,7 @@ import { compareByPeriod } from './utils/compare'
 import { Table } from './lib'
 import build from './utils/faLibrary'
 
-const LinkTest = () => <a href="#">Marina</a>
+const LinkTest = ({ children }) => <a href="#">{children}</a>
 
 const array = [
   {
@@ -174,6 +175,8 @@ const column = [
     text: 'VALUE',
     footer: 'VALUE',
     width: 100,
+    sort: true,
+    formatter: (val, { id }) => <LinkTest>{val} - {id}</LinkTest>,
   },
   {
     dataField: 'date',
