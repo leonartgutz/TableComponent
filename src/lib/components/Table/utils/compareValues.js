@@ -9,6 +9,7 @@ const compareValues = (key, order = 'asc') => {
     const varB = typeof b[key] === 'string' ? b[key].toUpperCase() : b[key]
 
     let comparison = 0
+
     if (varA > varB) {
       comparison = 1
     } else if (varA < varB) {

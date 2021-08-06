@@ -25,6 +25,7 @@ const Table = ({ columns, data, rowLimit, isDraggable, isResizable }) => {
   const [pagination, setPagination] = useState({})
   const [displayCol, setDisplayCol] = useState(columns)
   const [currentPage, setCurrentPage] = useState(1)
+  const [lastSort, setLastSort] = useState('')
 
   useEffect(() => {
     const paginationResult = paginator(data, currentPage, rowLimit)
@@ -48,6 +49,16 @@ const Table = ({ columns, data, rowLimit, isDraggable, isResizable }) => {
     const beforePage = copy.sort(compareValues(key, order))
     setInfo(beforePage)
     setDisplayArr(paginator(beforePage, currentPage, perPage).data)
+    setLastSort(key)
+  }
+
+  const customSortHandler = (key, order, callback) => {
+    const copy = [...info]
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
+    const beforePage = copy.sort((a, b) => callback(a[key], b[key], order))
+    setInfo(beforePage)
+    setDisplayArr(paginator(beforePage, currentPage, perPage).data)
+    setLastSort(key)
   }
 
   const onDragEnd = (result) => {
@@ -85,7 +96,7 @@ const Table = ({ columns, data, rowLimit, isDraggable, isResizable }) => {
     const pages = []
 
     pages.push(
-      <li>
+      <li key="first">
         <button type="button" onClick={() => changePage(1)} disabled={currentPage <= 1}>
           first
         </button>
@@ -93,7 +104,7 @@ const Table = ({ columns, data, rowLimit, isDraggable, isResizable }) => {
     )
 
     pages.push(
-      <li>
+      <li key="back">
         <button
           type="button"
           onClick={() => changePage(currentPage - 1)}
@@ -117,7 +128,7 @@ const Table = ({ columns, data, rowLimit, isDraggable, isResizable }) => {
     }
 
     pages.push(
-      <li key="pages-current">
+      <li key="current-page">
         <button type="button" disabled>
           {currentPage}
         </button>
@@ -137,7 +148,7 @@ const Table = ({ columns, data, rowLimit, isDraggable, isResizable }) => {
     }
 
     pages.push(
-      <li>
+      <li key="next">
         <button
           type="button"
           onClick={() => changePage(currentPage + 1)}
@@ -149,7 +160,7 @@ const Table = ({ columns, data, rowLimit, isDraggable, isResizable }) => {
     )
 
     pages.push(
-      <li>
+      <li key="last">
         <button
           type="button"
           onClick={() => changePage(totalPages)}
@@ -177,10 +188,20 @@ const Table = ({ columns, data, rowLimit, isDraggable, isResizable }) => {
                   isResizable={isResizable}
                 >
                   <TableHead width={column.width}>
-                    <button type="button" onClick={() => sortHanlder(column.dataField, sortOrder)}>
-                      {column.text}
-                    </button>
+                    {column.text}
+                    {column.sort
+                      ? (
+                        <button type="button" onClick={() => sortHanlder(column.dataField, sortOrder)}>
+                          {lastSort === column.dataField ? sortOrder : 's'}
+                        </button>
+                      )
+                      : ''}
                   </TableHead>
+                  {column.sortFunction ? (
+                    <button type="button" onClick={() => customSortHandler(column.dataField, sortOrder, column.sortFunction)}>
+                      Click Me
+                    </button>
+                  ) : ''}
                   <TableScrollArea index={index}>
                     {displayArr.map((row, rowIndex) => (
                       <TableRow key={rowIndex} row={row} column={column} index={rowIndex} />

@@ -22,10 +22,12 @@ const TableColumn = ({ children, column, isDraggable, isResizable }) => {
             {...provided.draggableProps}
             ref={provided.innerRef}
           >
-            <span {...provided.dragHandleProps} title="Drag and Drop">Drag</span>
-            {children}
+            <div className="tableStyle__btn-area">
+              <span {...provided.dragHandleProps} title="Drag and Drop">Drag</span>
+              {isResizable ? <span className="tableStyle__resizer">Resize</span> : ''}
+            </div>
 
-            {isResizable ? <span className="tableStyle__resizer">Resize</span> : ''}
+            {children}
           </div>
         )}
       </Draggable>

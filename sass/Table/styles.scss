@@ -1,3 +1,5 @@
+@import '../theme';
+
 %defaultProps {
   margin: 0;
   padding: 0;
@@ -8,6 +10,7 @@
 }
 
 .tableStyle {
+  $self: &;
   display: flex;
   width: 100%;
   @extend %defaultProps;
@@ -35,6 +38,13 @@
     border: 1px solid black;
     min-width: 100px;
     background: #eee;
+
+    &:hover {
+      #{ $self }__btn-area {
+        opacity: 1;
+        pointer-events: all;
+      }
+    }
   }
 
   &__scrollArea {
@@ -49,9 +59,16 @@
     // }
   }
 
+  &__btn-area {
+    pointer-events: none;
+    opacity: 0;
+    transition: all .2s ease;
+  }
+
   &__row {
     &--hover {
       background: red;
+      cursor: pointer;
     }
 
     &--selected {
