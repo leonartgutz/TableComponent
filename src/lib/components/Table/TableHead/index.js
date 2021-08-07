@@ -5,10 +5,10 @@ import TableCell from '../TableCell'
 import TableHeadButton from './TableHeadButton'
 
 const TableHead = ({
-  children, minWidth, isSort, sortOrder, sortFunction, column, lastSort, customSortFunction,
+  children, isSort, sortOrder, sortFunction, column, lastSort, customSortFunction,
 }) => (
   <div className="tableStyle__head">
-    <TableCell minWidth={minWidth}>
+    <TableCell>
       {children}
       { isSort ? <TableHeadButton lastSort={lastSort} column={column} sortOrder={sortOrder} sortFunction={sortFunction} customSortFunction={customSortFunction} /> : ''}
     </TableCell>
@@ -21,7 +21,6 @@ TableHead.propTypes = {
     dataField: PropTypes.string,
     sortFunction: PropTypes.func,
   }).isRequired,
-  minWidth: PropTypes.number,
   isSort: PropTypes.bool,
   sortOrder: PropTypes.string,
   sortFunction: PropTypes.func,
@@ -31,7 +30,6 @@ TableHead.propTypes = {
 
 TableHead.defaultProps = {
   isSort: false,
-  minWidth: 100,
   sortOrder: 'asc',
   sortFunction: () => {},
   customSortFunction: null,

@@ -1,6 +1,46 @@
+// Flex generator
 @mixin flexGen($direction, $wrap, $justify, $align) {
   display: flex !important;
   flex-flow: $direction $wrap !important;
   justify-content: $justify !important;
   align-items: $align !important;
+}
+
+// Grid Generator
+@mixin gridGen($columns, $rows, $row-gap, $column-gap) {
+  display: grid !important;
+  grid-template-columns: $columns !important;
+  grid-template-rows: $rows;
+  row-gap: $row-gap;
+  column-gap: $column-gap;
+}
+
+// Media Queries
+$firstBrk: 800px;
+$secondBrk: 1000px;
+$thirdBrk: 1220px;
+$forthBrk: 1440px;
+
+@mixin firstBrk {
+  @media (min-width: $firstBrk) {
+    @content;
+  }
+}
+
+@mixin secondBrk {
+  @media (min-width: $secondBrk) {
+    @content;
+  }
+}
+
+@mixin thirdBrk {
+  @media (min-width: $thirdBrk) {
+    @content;
+  }
+}
+
+@mixin forthBrk {
+  @media (min-width: $forthBrk) {
+    @content;
+  }
 }

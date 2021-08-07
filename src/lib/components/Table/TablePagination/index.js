@@ -88,6 +88,7 @@ const TablePagination = ({ currentPage, totalPages, changePage }) => {
 
   return (
     <div className="tableStyle__pagination">
+      <div className="tableStyle__manyPages">Page {currentPage} of {totalPages}</div>
       <ul>{generatePages(currentPage, totalPages)}</ul>
     </div>
   )

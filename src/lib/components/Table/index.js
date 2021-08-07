@@ -86,42 +86,45 @@ const Table = ({
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="tableStyle">
-        <Droppable droppableId="DroppableId" direction="horizontal" type="column">
-          {(provided) => (
-            <div className="tableStyle__table" {...provided.droppableProps} ref={provided.innerRef}>
-              {displayCol.map((column, index) => (
-                <TableColumn
-                  key={`column-${index}`}
-                  column={index}
-                  isDraggable={isDraggable}
-                  isResizable={isResizable}
-                >
-                  <TableHead
-                    column={column}
-                    minWidth={column.width}
-                    isSort={column.sort}
-                    sortOrder={sortOrder}
-                    lastSort={lastSort}
-                    customSortFunction={customSortHandler}
-                    sortFunction={sortHanlder}
+        <div className="tableStyle__horizontalScroll">
+          <Droppable droppableId="DroppableId" direction="horizontal" type="column">
+            {(provided) => (
+              <div className="tableStyle__table" {...provided.droppableProps} ref={provided.innerRef}>
+                {displayCol.map((column, index) => (
+                  <TableColumn
+                    key={`column-${index}`}
+                    column={index}
+                    isDraggable={isDraggable}
+                    isResizable={isResizable}
                   >
-                    {column.text}
-                  </TableHead>
+                    <TableHead
+                      column={column}
+                      minWidth={column.width}
+                      isSort={column.sort}
+                      sortOrder={sortOrder}
+                      lastSort={lastSort}
+                      customSortFunction={customSortHandler}
+                      sortFunction={sortHanlder}
+                    >
+                      {column.text}
+                    </TableHead>
 
-                  <TableScrollArea index={index}>
-                    {displayArr.map((row, rowIndex) => (
-                      <TableRow key={rowIndex} row={row} column={column} index={rowIndex} />
-                    ))}
-                  </TableScrollArea>
-                  <TableFooter>
-                    {column.footerFormatter ? column.footerFormatter(column, index) : column.footer}
-                  </TableFooter>
-                </TableColumn>
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
+                    <TableScrollArea index={index} width={column.width}>
+                      {displayArr.map((row, rowIndex) => (
+                        <TableRow key={rowIndex} row={row} column={column} index={rowIndex} />
+                      ))}
+                    </TableScrollArea>
+
+                    <TableFooter>
+                      {column.footerFormatter ? column.footerFormatter(column, index) : column.footer}
+                    </TableFooter>
+                  </TableColumn>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </div>
 
         <TablePagination currentPage={currentPage} totalPages={totalPages} changePage={changePage} />
       </div>

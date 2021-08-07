@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
 /* eslint-disable jsx-a11y/mouse-events-have-key-events */
@@ -7,7 +8,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import '../styles.css'
 
-const TableScrollArea = ({ children, index }) => {
+const TableScrollArea = ({ children, index, width }) => {
   const scrollHandler = (e, index) => {
     const active = e.target
     const scrollers = document.querySelectorAll('.tableStyle__scrollArea')
@@ -25,6 +26,7 @@ const TableScrollArea = ({ children, index }) => {
       // onWheelCapture={(e) => scrollHandler(e, index)}
       // onWheel={(e) => scrollHandler(e, index)}
       className={`tableStyle__scrollArea tableStyle__scroll-${index}`}
+      style={{ width }}
     >
       {children}
     </div>
@@ -34,6 +36,11 @@ const TableScrollArea = ({ children, index }) => {
 TableScrollArea.propTypes = {
   children: PropTypes.node.isRequired,
   index: PropTypes.number.isRequired,
+  width: PropTypes.any,
+}
+
+TableScrollArea.defaultProps = {
+  width: 150,
 }
 
 export default TableScrollArea

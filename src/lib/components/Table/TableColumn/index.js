@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Draggable } from 'react-beautiful-dnd'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import makeResizableDiv from '../utils/resizable'
 
 const TableColumn = ({
@@ -10,7 +11,7 @@ const TableColumn = ({
 }) => {
   if (isResizable) {
     useEffect(() => {
-      makeResizableDiv(`.tableStyle__column-${column}`)
+      makeResizableDiv(`.tableStyle__column-${column}`, column)
     }, [])
   }
 
@@ -24,8 +25,8 @@ const TableColumn = ({
             ref={provided.innerRef}
           >
             <div className="tableStyle__btn-area">
-              <span {...provided.dragHandleProps} title="Drag and Drop">Drag</span>
-              {isResizable ? <span className="tableStyle__resizer">Resize</span> : ''}
+              <span {...provided.dragHandleProps} title="Drag and Drop"><FontAwesomeIcon icon="grip-horizontal" /></span>
+              {isResizable ? <span className="tableStyle__resizer" title="Resize"><FontAwesomeIcon icon="arrows-alt-h" /></span> : ''}
             </div>
 
             {children}
@@ -34,6 +35,7 @@ const TableColumn = ({
       </Draggable>
     )
   }
+
   return (
     <div className={`tableStyle__column tableStyle__column-${column}`}>
       {isResizable ? <span className="tableStyle__resizer">Resize</span> : ''}

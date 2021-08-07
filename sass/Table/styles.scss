@@ -1,4 +1,22 @@
 @import '../theme';
+@import '../mixins';
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+@font-face {
+  font-family: 'gotham_promedium';
+  src: url('../../../fonts/gothampro-medium-webfont.woff2') format('woff2'),
+    url('../../../fonts/gothampro-medium-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'gotham_proregular';
+  src: url('../../../fonts/gothampro-webfont.woff2') format('woff2'),
+    url('../../../fonts/gothampro-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 
 %defaultProps {
   margin: 0;
@@ -7,21 +25,23 @@
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
+  font-family: 'Lato', sans-serif;
 }
 
 .tableStyle {
+  @extend %defaultProps;
   $self: &;
   display: flex;
   width: 100%;
-  @extend %defaultProps;
+  flex-flow: column wrap;
+  overflow: hidden;
 
   &__table {
+    @extend %defaultProps;
     display: flex;
     flex: 1;
-    @extend %defaultProps;
   }
 
-  &__head,
   &__footer,
   &__body {
     @extend %defaultProps;
@@ -29,15 +49,45 @@
   }
 
   &__head {
+    @extend %defaultProps;
     display: flex;
     align-items: center;
     justify-content: left;
+
+    button {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: colors(color1);
+    }
+
+    #{ $self }__cell {
+      color: grey;
+      font-size: 11px;
+      font-family: 'gotham_promedium';
+      letter-spacing: 0.5px;
+
+      &__content {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+      }
+    }
+  }
+
+  &__footer {
+    display: flex;
+    align-items: flex-start;
+    justify-content: left;
+
+    #{ $self }__cell {
+      min-height: 30px;
+      height: auto !important;
+    }
   }
 
   &__column {
-    border: 1px solid black;
-    min-width: 100px;
-    background: #eee;
+    background: #fff;
 
     &:hover {
       #{ $self }__btn-area {
@@ -47,9 +97,15 @@
     }
   }
 
+  &__horizontalScroll {
+    display: flex;
+    width: 100%;
+    overflow-x: auto;
+  }
+
   &__scrollArea {
-    flex: 1;
-    min-height: 300px;
+    // flex: 1;
+    // min-height: 300px;
     // max-height: 300px;
     // overflow-y: scroll;
     // scrollbar-width: none;
@@ -62,17 +118,29 @@
   &__btn-area {
     pointer-events: none;
     opacity: 0;
-    transition: all .2s ease;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-content: center;
+    padding: 0.3rem 1.5rem 0.3rem 0.5rem;
   }
 
   &__row {
+    display: flex;
+    overflow: hidden;
+    border-bottom: 1px colors(color5) solid;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+
     &--hover {
-      background: red;
+      background: lighten(colors(color2), 35%);
       cursor: pointer;
     }
 
     &--selected {
-      background: green;
+      background: lighten(colors(color2), 35%);
     }
   }
 
@@ -83,25 +151,68 @@
 
   &__cell {
     @extend %defaultProps;
+    color: colors(color1);
+    height: 30px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+    padding: 0.5rem;
+    overflow: hidden;
+    letter-spacing: 0.3px;
     width: 100%;
+    font-size: 15px;
+
+    &__content {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: colors(color1);
+
+      &:hover {
+        color: colors(color2);
+      }
+    }
   }
 
   &__pagination {
     @extend %defaultProps;
+    display: flex;
+    justify-content: space-between;
 
     ul {
       @extend %defaultProps;
+      display: flex;
       list-style: none;
     }
 
     li {
       @extend %defaultProps;
+      margin: 0 0.2rem;
+
+      button {
+        background: transparent;
+        border: none;
+        padding: 0.3rem 0.5rem;
+        color: colors(color4);
+
+        &:hover {
+          background: colors(color4);
+          color: #fff;
+        }
+      }
+    }
+
+    #{ $self }__manyPages {
+      color: colors(color1);
     }
   }
 
   &__resizer {
-    background: grey;
-    padding: 1rem;
     display: block;
     cursor: col-resize;
   }

@@ -1,3 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+@font-face {
+  font-family: "gotham_promedium";
+  src: url("../../../fonts/gothampro-medium-webfont.woff2") format("woff2"), url("../../../fonts/gothampro-medium-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "gotham_proregular";
+  src: url("../../../fonts/gothampro-webfont.woff2") format("woff2"), url("../../../fonts/gothampro-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
 .tableStyle__pagination li, .tableStyle__pagination ul, .tableStyle__pagination, .tableStyle__cell, .tableStyle__row, .tableStyle__column, .tableStyle__head, .tableStyle__footer, .tableStyle__body, .tableStyle__table, .tableStyle {
   margin: 0;
   padding: 0;
@@ -5,17 +18,20 @@
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
+  font-family: "Lato", sans-serif;
 }
 
 .tableStyle {
   display: flex;
   width: 100%;
+  flex-flow: column wrap;
+  overflow: hidden;
 }
 .tableStyle__table {
   display: flex;
   flex: 1;
 }
-.tableStyle__head, .tableStyle__footer, .tableStyle__body {
+.tableStyle__footer, .tableStyle__body {
   width: 100%;
 }
 .tableStyle__head {
@@ -23,40 +39,119 @@
   align-items: center;
   justify-content: left;
 }
+.tableStyle__head button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #253746;
+}
+.tableStyle__head .tableStyle__cell {
+  color: grey;
+  font-size: 11px;
+  font-family: "gotham_promedium";
+  letter-spacing: 0.5px;
+}
+.tableStyle__head .tableStyle__cell__content {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.tableStyle__footer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: left;
+}
+.tableStyle__footer .tableStyle__cell {
+  min-height: 30px;
+  height: auto !important;
+}
 .tableStyle__column {
-  border: 1px solid black;
-  min-width: 100px;
-  background: #eee;
+  background: #fff;
 }
 .tableStyle__column:hover .tableStyle__btn-area {
   opacity: 1;
   pointer-events: all;
 }
-.tableStyle__scrollArea {
-  flex: 1;
-  min-height: 300px;
+.tableStyle__horizontalScroll {
+  display: flex;
+  width: 100%;
+  overflow-x: auto;
 }
 .tableStyle__btn-area {
   pointer-events: none;
   opacity: 0;
   transition: all 0.2s ease;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-content: center;
+  padding: 0.3rem 1.5rem 0.3rem 0.5rem;
+}
+.tableStyle__row {
+  display: flex;
+  overflow: hidden;
+  border-bottom: 1px #D6DADE solid;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 .tableStyle__row--hover {
-  background: red;
+  background: #feead9;
   cursor: pointer;
 }
 .tableStyle__row--selected {
-  background: green;
+  background: #feead9;
 }
 .tableStyle__cell {
+  color: #253746;
+  height: 30px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+  padding: 0.5rem;
+  overflow: hidden;
+  letter-spacing: 0.3px;
   width: 100%;
+  font-size: 15px;
+}
+.tableStyle__cell__content {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.tableStyle__cell a {
+  text-decoration: none;
+  color: #253746;
+}
+.tableStyle__cell a:hover {
+  color: #F78D2D;
+}
+.tableStyle__pagination {
+  display: flex;
+  justify-content: space-between;
 }
 .tableStyle__pagination ul {
+  display: flex;
   list-style: none;
 }
+.tableStyle__pagination li {
+  margin: 0 0.2rem;
+}
+.tableStyle__pagination li button {
+  background: transparent;
+  border: none;
+  padding: 0.3rem 0.5rem;
+  color: #92ADCB;
+}
+.tableStyle__pagination li button:hover {
+  background: #92ADCB;
+  color: #fff;
+}
+.tableStyle__pagination .tableStyle__manyPages {
+  color: #253746;
+}
 .tableStyle__resizer {
-  background: grey;
-  padding: 1rem;
   display: block;
   cursor: col-resize;
 }

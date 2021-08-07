@@ -8,6 +8,7 @@ import { Table } from './lib'
 import build from './utils/faLibrary'
 
 const LinkTest = ({ children }) => <a href="#">{children}</a>
+const DoubleLine = ({ children }) => <div><p>First</p><p>{children}</p></div>
 
 const array = [
   {
@@ -30,7 +31,7 @@ const array = [
   },
   {
     id: 4,
-    name: 'Jess',
+    name: 'Angela keeping asking a lot of questions! So annoying!',
     value: 88.89,
     date: 'Aug / 2021',
   },
@@ -144,7 +145,7 @@ const array = [
   },
   {
     id: 23,
-    name: <LinkTest />,
+    name: 'SSSS',
     value: 4.23,
     date: 'Feb / 2019',
   },
@@ -166,17 +167,19 @@ const column = [
   },
   {
     dataField: 'name',
-    text: 'NAME',
+    text: 'NEW PENDING TRANSACTIONS',
     footer: 'NAME',
     width: 200,
+    sort: true,
   },
   {
     dataField: 'value',
-    text: 'VALUE',
+    text: 'OLD APPROVED TRANSACTIONS',
     footer: 'VALUE',
     width: 100,
     sort: true,
     formatter: (val, { id }) => <LinkTest>{val} - {id}</LinkTest>,
+    footerFormatter: ({ dataField }) => <DoubleLine>{ dataField }</DoubleLine>,
   },
   {
     dataField: 'date',

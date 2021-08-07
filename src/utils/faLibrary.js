@@ -43,6 +43,7 @@ import {
   faAngleRight,
   faAngleDoubleRight,
   faCheck,
+  faArrowsAltH,
 } from '@fortawesome/free-solid-svg-icons'
 
 const build = () => {
@@ -91,6 +92,7 @@ const build = () => {
     faAngleRight,
     faAngleDoubleRight,
     faCheck,
+    faArrowsAltH,
   )
 }
 
