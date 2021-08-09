@@ -42,7 +42,7 @@ const TableRow = ({ column, row, index }) => {
 }
 
 TableRow.propTypes = {
-  row: PropTypes.shape(PropTypes.object).isRequired,
+  row: PropTypes.shape({}).isRequired,
   column: PropTypes.shape({
     dataField: PropTypes.string.isRequired,
     formatter: PropTypes.func,

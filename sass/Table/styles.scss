@@ -1,22 +1,22 @@
 @import '../theme';
 @import '../mixins';
-@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
-@font-face {
-  font-family: 'gotham_promedium';
-  src: url('../../../fonts/gothampro-medium-webfont.woff2') format('woff2'),
-    url('../../../fonts/gothampro-medium-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
+// @font-face {
+//   font-family: 'gotham_promedium';
+//   src: url('../../../fonts/gothampro-medium-webfont.woff2') format('woff2'),
+//     url('../../../fonts/gothampro-medium-webfont.woff') format('woff');
+//   font-weight: normal;
+//   font-style: normal;
+// }
 
-@font-face {
-  font-family: 'gotham_proregular';
-  src: url('../../../fonts/gothampro-webfont.woff2') format('woff2'),
-    url('../../../fonts/gothampro-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
+// @font-face {
+//   font-family: 'gotham_proregular';
+//   src: url('../../../fonts/gothampro-webfont.woff2') format('woff2'),
+//     url('../../../fonts/gothampro-webfont.woff') format('woff');
+//   font-weight: normal;
+//   font-style: normal;
+// }
 
 %defaultProps {
   margin: 0;
@@ -26,6 +26,13 @@
   font: inherit;
   vertical-align: baseline;
   font-family: 'Lato', sans-serif;
+}
+
+%defaultHeadCell {
+  color: grey;
+  font-size: 11px;
+  font-family: GothamPro-Medium;
+  letter-spacing: 0.5px;
 }
 
 .tableStyle {
@@ -42,50 +49,6 @@
     flex: 1;
   }
 
-  &__footer,
-  &__body {
-    @extend %defaultProps;
-    width: 100%;
-  }
-
-  &__head {
-    @extend %defaultProps;
-    display: flex;
-    align-items: center;
-    justify-content: left;
-
-    button {
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      color: colors(color1);
-    }
-
-    #{ $self }__cell {
-      color: grey;
-      font-size: 11px;
-      font-family: 'gotham_promedium';
-      letter-spacing: 0.5px;
-
-      &__content {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-      }
-    }
-  }
-
-  &__footer {
-    display: flex;
-    align-items: flex-start;
-    justify-content: left;
-
-    #{ $self }__cell {
-      min-height: 30px;
-      height: auto !important;
-    }
-  }
-
   &__column {
     background: #fff;
 
@@ -94,6 +57,22 @@
         opacity: 1;
         pointer-events: all;
       }
+    }
+  }
+
+  &__row {
+    display: flex;
+    overflow: hidden;
+    border-bottom: 1px colors(color5) solid;
+    width: 100%;
+
+    &--hover {
+      background: lighten(colors(color2), 35%);
+      cursor: pointer;
+    }
+
+    &--selected {
+      background: lighten(colors(color2), 35%);
     }
   }
 
@@ -115,40 +94,6 @@
     // }
   }
 
-  &__btn-area {
-    pointer-events: none;
-    opacity: 0;
-    transition: all 0.2s ease;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-content: center;
-    padding: 0.3rem 1.5rem 0.3rem 0.5rem;
-  }
-
-  &__row {
-    display: flex;
-    overflow: hidden;
-    border-bottom: 1px colors(color5) solid;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    width: 100%;
-
-    &--hover {
-      background: lighten(colors(color2), 35%);
-      cursor: pointer;
-    }
-
-    &--selected {
-      background: lighten(colors(color2), 35%);
-    }
-  }
-
-  &__row,
-  &__column {
-    @extend %defaultProps;
-  }
-
   &__cell {
     @extend %defaultProps;
     color: colors(color1);
@@ -162,6 +107,8 @@
     letter-spacing: 0.3px;
     width: 100%;
     font-size: 15px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 
     &__content {
       white-space: nowrap;
@@ -177,6 +124,67 @@
         color: colors(color2);
       }
     }
+  }
+
+  &__head {
+    @extend %defaultProps;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    button {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: colors(color1);
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+
+      p {
+        @extend %defaultHeadCell;
+        text-align: left;
+        line-height: 1.3;
+        padding: 0;
+        margin: 0;
+        margin-right: 0.2rem;
+      }
+    }
+
+    #{ $self }__cell {
+      @extend %defaultHeadCell;
+      height: 48px;
+
+      &__content {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        white-space: normal;
+        line-height: 1.3;
+      }
+    }
+  }
+
+  &__footer {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    #{ $self }__cell {
+      min-height: 30px;
+      height: auto !important;
+    }
+  }
+
+  &__btn-area {
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-content: center;
+    padding: 0.3rem 1.5rem 0.3rem 0.5rem;
   }
 
   &__pagination {
@@ -215,5 +223,16 @@
   &__resizer {
     display: block;
     cursor: col-resize;
+  }
+
+  &__footer,
+  &__body {
+    @extend %defaultProps;
+    width: 100%;
+  }
+
+  &__row,
+  &__column {
+    @extend %defaultProps;
   }
 }

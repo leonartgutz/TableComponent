@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import upDown from '../../assets/up-down.svg'
 
 const TableHeadButton = ({
-  sortFunction, sortOrder, customSortFunction, column, lastSort,
+  sortFunction, sortOrder, customSortFunction, column, lastSort, text,
 }) => {
   const sortIconHandler = (order) => {
     if (order === 'asc') {
@@ -16,6 +16,7 @@ const TableHeadButton = ({
 
   return (
     <button type="button" onClick={column.sortFunction ? () => customSortFunction(column.dataField, sortOrder, column.sortFunction) : () => sortFunction(column.dataField, sortOrder)}>
+      <p>{text}</p>
       {lastSort === column.dataField ? sortIconHandler(sortOrder) : (<img src={upDown} alt="up-down" />)}
     </button>
   )
@@ -30,6 +31,7 @@ TableHeadButton.propTypes = {
     sortFunction: PropTypes.func,
   }).isRequired,
   lastSort: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
 }
 
 TableHeadButton.defaultProps = {

@@ -1,17 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
-@font-face {
-  font-family: "gotham_promedium";
-  src: url("../../../fonts/gothampro-medium-webfont.woff2") format("woff2"), url("../../../fonts/gothampro-medium-webfont.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: "gotham_proregular";
-  src: url("../../../fonts/gothampro-webfont.woff2") format("woff2"), url("../../../fonts/gothampro-webfont.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-.tableStyle__pagination li, .tableStyle__pagination ul, .tableStyle__pagination, .tableStyle__cell, .tableStyle__row, .tableStyle__column, .tableStyle__head, .tableStyle__footer, .tableStyle__body, .tableStyle__table, .tableStyle {
+.tableStyle__row, .tableStyle__column, .tableStyle__footer, .tableStyle__body, .tableStyle__pagination li, .tableStyle__pagination ul, .tableStyle__pagination, .tableStyle__head, .tableStyle__cell, .tableStyle__table, .tableStyle {
   margin: 0;
   padding: 0;
   border: 0;
@@ -19,6 +6,13 @@
   font: inherit;
   vertical-align: baseline;
   font-family: "Lato", sans-serif;
+}
+
+.tableStyle__head .tableStyle__cell, .tableStyle__head button p {
+  color: grey;
+  font-size: 11px;
+  font-family: GothamPro-Medium;
+  letter-spacing: 0.5px;
 }
 
 .tableStyle {
@@ -31,40 +25,6 @@
   display: flex;
   flex: 1;
 }
-.tableStyle__footer, .tableStyle__body {
-  width: 100%;
-}
-.tableStyle__head {
-  display: flex;
-  align-items: center;
-  justify-content: left;
-}
-.tableStyle__head button {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: #253746;
-}
-.tableStyle__head .tableStyle__cell {
-  color: grey;
-  font-size: 11px;
-  font-family: "gotham_promedium";
-  letter-spacing: 0.5px;
-}
-.tableStyle__head .tableStyle__cell__content {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-.tableStyle__footer {
-  display: flex;
-  align-items: flex-start;
-  justify-content: left;
-}
-.tableStyle__footer .tableStyle__cell {
-  min-height: 30px;
-  height: auto !important;
-}
 .tableStyle__column {
   background: #fff;
 }
@@ -72,27 +32,10 @@
   opacity: 1;
   pointer-events: all;
 }
-.tableStyle__horizontalScroll {
-  display: flex;
-  width: 100%;
-  overflow-x: auto;
-}
-.tableStyle__btn-area {
-  pointer-events: none;
-  opacity: 0;
-  transition: all 0.2s ease;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  align-content: center;
-  padding: 0.3rem 1.5rem 0.3rem 0.5rem;
-}
 .tableStyle__row {
   display: flex;
   overflow: hidden;
   border-bottom: 1px #D6DADE solid;
-  white-space: nowrap;
-  text-overflow: ellipsis;
   width: 100%;
 }
 .tableStyle__row--hover {
@@ -101,6 +44,11 @@
 }
 .tableStyle__row--selected {
   background: #feead9;
+}
+.tableStyle__horizontalScroll {
+  display: flex;
+  width: 100%;
+  overflow-x: auto;
 }
 .tableStyle__cell {
   color: #253746;
@@ -114,6 +62,8 @@
   letter-spacing: 0.3px;
   width: 100%;
   font-size: 15px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .tableStyle__cell__content {
   white-space: nowrap;
@@ -126,6 +76,56 @@
 }
 .tableStyle__cell a:hover {
   color: #F78D2D;
+}
+.tableStyle__head {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.tableStyle__head button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #253746;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.tableStyle__head button p {
+  text-align: left;
+  line-height: 1.3;
+  padding: 0;
+  margin: 0;
+  margin-right: 0.2rem;
+}
+.tableStyle__head .tableStyle__cell {
+  height: 48px;
+}
+.tableStyle__head .tableStyle__cell__content {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  white-space: normal;
+  line-height: 1.3;
+}
+.tableStyle__footer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.tableStyle__footer .tableStyle__cell {
+  min-height: 30px;
+  height: auto !important;
+}
+.tableStyle__btn-area {
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-content: center;
+  padding: 0.3rem 1.5rem 0.3rem 0.5rem;
 }
 .tableStyle__pagination {
   display: flex;
@@ -154,4 +154,7 @@
 .tableStyle__resizer {
   display: block;
   cursor: col-resize;
+}
+.tableStyle__footer, .tableStyle__body {
+  width: 100%;
 }

@@ -9,8 +9,9 @@ const TableHead = ({
 }) => (
   <div className="tableStyle__head">
     <TableCell>
-      {children}
-      { isSort ? <TableHeadButton lastSort={lastSort} column={column} sortOrder={sortOrder} sortFunction={sortFunction} customSortFunction={customSortFunction} /> : ''}
+      { isSort
+        ? <TableHeadButton text={children} lastSort={lastSort} column={column} sortOrder={sortOrder} sortFunction={sortFunction} customSortFunction={customSortFunction} />
+        : { children }}
     </TableCell>
   </div>
 )
